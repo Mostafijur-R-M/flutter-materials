@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            '\$28000.00',
+                            '28000.00',
                             style: TextStyle(
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.bold,
@@ -142,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             height: 15,
                           ),
                           Text(
-                            'Available Balance',
+                            'Available Diamond',
                             style:
                                 TextStyle(fontSize: 14.0, color: Colors.white),
                           ),
@@ -156,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 30.0, vertical: 16.0),
                           child: Text(
-                            'Top Up',
+                            'Withdraw',
                             style:
                                 TextStyle(fontSize: 16.0, color: Colors.white),
                           ),
@@ -204,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     color: Colors.purple.withOpacity(0.1),
                                     child: IconButton(
                                       padding: const EdgeInsets.all(15.0),
-                                      icon: Icon(Icons.send),
+                                      icon: Icon(Icons.bug_report),
                                       color: Colors.purple,
                                       iconSize: 30.0,
                                       onPressed: () {},
@@ -214,7 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     height: 8.0,
                                   ),
                                   Text(
-                                    'Send',
+                                    'Breaking News',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 14,
@@ -229,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     color: Colors.blue.withOpacity(0.1),
                                     child: IconButton(
                                       padding: const EdgeInsets.all(15.0),
-                                      icon: Icon(Icons.credit_card),
+                                      icon: Icon(Icons.book),
                                       color: Colors.blue,
                                       iconSize: 30.0,
                                       onPressed: () {},
@@ -239,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     height: 8.0,
                                   ),
                                   Text(
-                                    'Pay',
+                                    'Blog',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 14,
@@ -254,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     color: Colors.orange.withOpacity(0.1),
                                     child: IconButton(
                                       padding: const EdgeInsets.all(15.0),
-                                      icon: Icon(Icons.receipt),
+                                      icon: Icon(Icons.games),
                                       color: Colors.orange,
                                       iconSize: 30.0,
                                       onPressed: () {},
@@ -264,7 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     height: 8.0,
                                   ),
                                   Text(
-                                    'Request',
+                                    'Sports',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 14,
@@ -288,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     color: Colors.pink.withOpacity(0.1),
                                     child: IconButton(
                                       padding: const EdgeInsets.all(15.0),
-                                      icon: Icon(Icons.monetization_on),
+                                      icon: Icon(Icons.video_library),
                                       color: Colors.pink,
                                       iconSize: 30.0,
                                       onPressed: () {},
@@ -298,7 +298,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     height: 8.0,
                                   ),
                                   Text(
-                                    'Invoice',
+                                    'Watch Tutorial',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 14,
@@ -313,7 +313,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     color: Colors.purpleAccent.withOpacity(0.1),
                                     child: IconButton(
                                       padding: const EdgeInsets.all(15.0),
-                                      icon: Icon(Icons.favorite),
+                                      icon: Icon(Icons.card_giftcard),
                                       color: Colors.purpleAccent,
                                       iconSize: 30.0,
                                       onPressed: () {},
@@ -323,7 +323,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     height: 8.0,
                                   ),
                                   Text(
-                                    'Charity',
+                                    'Sell Diamond',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 14,
@@ -338,7 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     color: Colors.deepPurple.withOpacity(0.1),
                                     child: IconButton(
                                       padding: const EdgeInsets.all(15.0),
-                                      icon: Icon(Icons.attach_money),
+                                      icon: Icon(Icons.surround_sound),
                                       color: Colors.deepPurple,
                                       iconSize: 30.0,
                                       onPressed: () {
@@ -350,7 +350,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     height: 8.0,
                                   ),
                                   Text(
-                                    'Loan',
+                                    'Dictionary',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 14,

@@ -1,10 +1,11 @@
+import 'package:device_id/device_id.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loginui/card/upcoming_card.dart';
-import 'package:loginui/screen/dashboard.dart';
 import 'package:loginui/screen/user_profile.dart';
+import 'package:loginui/screen/withdraw_screen.dart';
 
 void main() => runApp(HomeScreen());
 
@@ -28,10 +29,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String diamond = '00';
+  String imeiId = '';
+  DatabaseReference userRef =
+      FirebaseDatabase.instance.reference().child('Users');
+
   @override
   Widget build(BuildContext context) {
     const Color primaryColor = Color.fromRGBO(255, 82, 48, 1);
     viewSaveData();
+    getImeiId();
+    getUserData();
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -132,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            '28000.00',
+                            diamond,
                             style: TextStyle(
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.bold,
@@ -165,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 context,
                                 MaterialPageRoute<void>(
                                     builder: (BuildContext context) =>
-                                        DashboardScreen()));
+                                        WithDrawScreen()));
                           },
                         ),
                       )
@@ -217,7 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     'Breaking News',
                                     style: TextStyle(
                                         color: Colors.black54,
-                                        fontSize: 14,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.bold),
                                   )
                                 ],
@@ -242,7 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     'Blog',
                                     style: TextStyle(
                                         color: Colors.black54,
-                                        fontSize: 14,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.bold),
                                   )
                                 ],
@@ -267,7 +275,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     'Sports',
                                     style: TextStyle(
                                         color: Colors.black54,
-                                        fontSize: 14,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.bold),
                                   )
                                 ],
@@ -301,7 +309,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     'Watch Tutorial',
                                     style: TextStyle(
                                         color: Colors.black54,
-                                        fontSize: 14,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.bold),
                                   )
                                 ],
@@ -326,7 +334,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     'Sell Diamond',
                                     style: TextStyle(
                                         color: Colors.black54,
-                                        fontSize: 14,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.bold),
                                   )
                                 ],
@@ -353,7 +361,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     'Dictionary',
                                     style: TextStyle(
                                         color: Colors.black54,
-                                        fontSize: 14,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.bold),
                                   )
                                 ],
@@ -457,10 +465,23 @@ class _MyHomePageState extends State<MyHomePage> {
   String url = '';
   void viewSaveData() {
     db.child('1').once().then((DataSnapshot snapshot) {
-      Fluttertoast.showToast(msg: 'Data: ${snapshot.value['url']}');
+      //Fluttertoast.showToast(msg: 'Data: ${snapshot.value['url']}');
       title = '${snapshot.value['title']}';
       url = '${snapshot.value['url']}';
       print('Data: ${snapshot.value}');
+    });
+  }
+
+  void getImeiId() async {
+    imeiId = (await DeviceId.getID) as String;
+    //Fluttertoast.showToast(msg: imeiId);
+    print("imeiId " + imeiId);
+  }
+
+  void getUserData() {
+    userRef.child(imeiId).once().then((DataSnapshot snapshot) {
+      diamond = '${snapshot.value['diamond']}';
+      print('diamond ' + diamond);
     });
   }
 }

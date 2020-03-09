@@ -101,7 +101,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 height: 15.0,
                               ),
                               Text(
-                                'Available balance',
+                                'Available Diamond',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -168,18 +168,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                'Loan Activity',
+                                'Sell Activity',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18.0),
                               ),
                               Text(
-                                'Sent Money',
+                                'Withdraw or sell',
                                 style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
+                                    color: Colors.black, fontSize: 14.0),
                               )
                             ],
                           ),
@@ -222,18 +220,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                'Load Activity',
+                                'Received Activity',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18.0),
                               ),
                               Text(
-                                'Request Money',
+                                'Rewarded diamond',
                                 style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
+                                    color: Colors.black, fontSize: 14.0),
                               )
                             ],
                           ),

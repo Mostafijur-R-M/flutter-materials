@@ -110,8 +110,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             shape: BoxShape.circle,
           ),
           child: GestureDetector(
-              child: Image.network(
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Vector-based_example.svg/2000px-Vector-based_example.svg.png',
+              child: Image.asset(
+            'assets/images/signup.png',
           )),
         ),
 //        Positioned(
@@ -261,7 +261,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     userRef.child(deviceImeiId).set({
       'uid': deviceImeiId,
       'name': nameController.text,
-      'phone': phoneController.text
+      'phone': phoneController.text,
+      'diamond': '0.0'
     });
     goToHomeScreen();
   }

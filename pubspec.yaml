@@ -39,6 +39,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/google.png
+    - assets/images/signup.png
+    - assets/images/withdraw.png
     - assets/images/facebook.png
     - assets/images/profile.png
     - assets/images/selena.jpg

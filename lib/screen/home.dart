@@ -29,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String diamond = '00';
+  String diamond = '0.0';
   String imeiId = '';
   DatabaseReference userRef =
       FirebaseDatabase.instance.reference().child('Users');

@@ -1,6 +1,8 @@
 import 'package:device_id/device_id.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:loginui/screen/home.dart';
 import 'package:loginui/widgets/CustomAppBar.dart';
 import 'package:loginui/widgets/ResponsiveWidget.dart';
 import 'package:loginui/widgets/custom_shape_clipper.dart';
@@ -18,12 +20,15 @@ class _WithDrawScreenState extends State<WithDrawScreen> {
   double _pixelRatio;
   bool _large;
   bool _medium;
-  TextEditingController nameController = TextEditingController();
+  TextEditingController viaController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController diamondController = TextEditingController();
   String deviceImeiId = '';
   DatabaseReference userRef =
       FirebaseDatabase.instance.reference().child('Users');
-  String diamond = '00';
+  String diamond = '0.0', name = '', phone = '', uid = '';
+  double currentDiamond = 0.0, withdrawDiamond = 0.0;
+  DatabaseReference withdrawRef = FirebaseDatabase.instance.reference().child('Withdraw');
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +115,8 @@ class _WithDrawScreenState extends State<WithDrawScreen> {
             shape: BoxShape.circle,
           ),
           child: GestureDetector(
-              child: Image.network(
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Vector-based_example.svg/2000px-Vector-based_example.svg.png',
+              child: Image.asset(
+            'assets/images/withdraw.png',
           )),
         ),
 //        Positioned(
@@ -159,7 +164,7 @@ class _WithDrawScreenState extends State<WithDrawScreen> {
       keyboardType: TextInputType.text,
       icon: Icons.credit_card,
       hint: "Via: Bkash, Rocket, UCash etc.",
-      textEditingController: nameController,
+      textEditingController: viaController,
     );
   }
 
@@ -177,7 +182,7 @@ class _WithDrawScreenState extends State<WithDrawScreen> {
       keyboardType: TextInputType.number,
       icon: Icons.attach_money,
       hint: 'Available diamond: ' + diamond,
-      textEditingController: phoneController,
+      textEditingController: diamondController,
     );
   }
 
@@ -188,6 +193,7 @@ class _WithDrawScreenState extends State<WithDrawScreen> {
       onPressed: () {
         print("Routing to your account");
         print(deviceImeiId);
+        confirmWithdraw();
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
@@ -216,8 +222,50 @@ class _WithDrawScreenState extends State<WithDrawScreen> {
 
   void getUserData() {
     userRef.child(deviceImeiId).once().then((DataSnapshot snapshot) {
+      name = '${snapshot.value['name']}';
+      phone = '${snapshot.value['phone']}';
+      uid = '${snapshot.value['uid']}';
       diamond = '${snapshot.value['diamond']}';
       print('diamond ' + diamond);
     });
+  }
+
+  void confirmWithdraw() {
+    currentDiamond = double.parse(diamond);
+    withdrawDiamond =  double.parse(diamondController.text);
+    if(currentDiamond >= withdrawDiamond && withdrawDiamond >= 500){
+      withdrawProcessing();
+    }
+    if(withdrawDiamond < 500){
+      Fluttertoast.showToast(msg: 'Increase Limit');
+    }
+    if(withdrawDiamond > currentDiamond){
+      Fluttertoast.showToast(msg: 'Limit Exceed');
+    }
+  }
+
+  void withdrawProcessing() {
+    double finalDiamond = currentDiamond - withdrawDiamond;
+    Fluttertoast.showToast(msg: 'Successfully withdraw: '+ finalDiamond.toString());
+    userRef.child(deviceImeiId).set({
+      'name': name,
+      'phone': phone,
+      'uid': uid,
+      'diamond': finalDiamond.toString(),
+    });
+    withdrawRef.child(deviceImeiId).set({
+      'diamond': withdrawDiamond.toString(),
+      'via': viaController.text,
+      'tnumber': phoneController.text,
+      'uid': uid,
+      'name': name,
+    });
+    goToHomaScreen();
+  }
+
+  void goToHomaScreen() {
+    Navigator.push(context, MaterialPageRoute<void>(
+      builder: (context) => HomeScreen(),
+    ));
   }
 }

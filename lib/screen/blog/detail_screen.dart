@@ -36,19 +36,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
 
   //timer count
   Timer timer;
-  int _start = 30;
-  void startTimeer() {
-    /*const oneSec = Duration(seconds: 1);
-    timer = new Timer.periodic(
-        oneSec,
-        (Timer timer) => setState(() {
-              if (_start < 1) {
-                timer.cancel();
-              } else {
-                _start = _start - 1;
-              }
-            }));*/
-  }
+  int _start = 20;
+  void startTimeer() {}
 
   //admob integrate
   static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
@@ -267,27 +256,31 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
     _interstitialAd
       ..load()
       ..show();
+    addDiamondDb();
   }
 
   void showTimer() {
-    //startTimeer();
-    int t = 0;
-    for (int i = 1; i < 30; i++) {
-      t = t + i;
-      Fluttertoast.showToast(msg: t.toString());
-    }
-    if (_start == 1) {
-      showAd();
-      timer.cancel();
-      addDiamondDb();
-    }
+    const oneSec = Duration(seconds: 1);
+    timer = new Timer.periodic(
+        oneSec,
+        (Timer timer) => setState(() {
+              if (_start < 1) {
+                timer.cancel();
+              } else {
+                _start = _start - 1;
+                if (_start == 1) {
+                  timer.cancel();
+                  Fluttertoast.showToast(msg: _start.toString());
+                  Fluttertoast.showToast(msg: 'Congrats! you won 500 diamond.');
+                  showAd();
+                }
+              }
+            }));
   }
 
   void addDiamondDb() {
     currentDiamond = double.parse(diamond);
     final double finalDiamond = currentDiamond + getDiamond;
-    Fluttertoast.showToast(
-        msg: 'Congrats! you won 500 diamond.' + finalDiamond.toString());
     userRef.child(deviceImeiId).set({
       'name': name,
       'phone': phone,

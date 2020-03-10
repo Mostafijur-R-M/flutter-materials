@@ -29,6 +29,8 @@ dependencies:
   path:
   flutter_plugin_android_lifecycle: ^1.0.0
   device_id: ^0.2.0
+  ads: ^1.7.2
+  firebase_admob: ^0.9.1+3
 
 
 dev_dependencies:
@@ -44,3 +46,11 @@ flutter:
     - assets/images/facebook.png
     - assets/images/profile.png
     - assets/images/selena.jpg
+    - assets/images/business.png
+    - assets/images/confident.png
+    - assets/images/failure.png
+    - assets/images/fitness.jpg
+    - assets/images/goal.jpg
+    - assets/images/hiv.png
+    - assets/images/interview.png
+    - assets/images/student.jpg

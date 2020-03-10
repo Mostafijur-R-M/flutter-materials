@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loginui/card/upcoming_card.dart';
+import 'package:loginui/screen/blog/BlogScreen.dart';
 import 'package:loginui/screen/user_profile.dart';
 import 'package:loginui/screen/withdraw_screen.dart';
 
@@ -240,7 +241,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                       icon: Icon(Icons.book),
                                       color: Colors.blue,
                                       iconSize: 30.0,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute<void>(
+                                              builder: (context) =>
+                                                  BlogScreen(),
+                                            ));
+                                      },
                                     ),
                                   ),
                                   const SizedBox(

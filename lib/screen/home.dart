@@ -7,6 +7,7 @@ import 'package:loginui/card/upcoming_card.dart';
 import 'package:loginui/screen/blog/BlogScreen.dart';
 import 'package:loginui/screen/user_profile.dart';
 import 'package:loginui/screen/withdraw_screen.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 void main() => runApp(HomeScreen());
 
@@ -35,9 +36,17 @@ class _MyHomePageState extends State<MyHomePage> {
   DatabaseReference userRef =
       FirebaseDatabase.instance.reference().child('Users');
 
+  ProgressDialog progressDialog;
+
   @override
   Widget build(BuildContext context) {
     const Color primaryColor = Color.fromRGBO(255, 82, 48, 1);
+
+    progressDialog =
+        new ProgressDialog(context, type: ProgressDialogType.Normal);
+    progressDialog.style(message: 'Please wait');
+    progressDialog.show();
+    // showProgressDialog();
     viewSaveData();
     getImeiId();
     getUserData();
@@ -216,7 +225,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                       icon: Icon(Icons.bug_report),
                                       color: Colors.purple,
                                       iconSize: 30.0,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        //showProgressDialog();
+                                        ProgressDialog pr =
+                                            new ProgressDialog(context);
+                                        pr.show();
+                                        Fluttertoast.showToast(msg: 'null');
+                                      },
                                     ),
                                   ),
                                   const SizedBox(
@@ -478,6 +493,7 @@ class _MyHomePageState extends State<MyHomePage> {
       url = '${snapshot.value['url']}';
       print('Data: ${snapshot.value}');
     });
+    progressDialog.hide();
   }
 
   void getImeiId() async {
@@ -491,6 +507,11 @@ class _MyHomePageState extends State<MyHomePage> {
       diamond = '${snapshot.value['diamond']}';
       print('diamond ' + diamond);
     });
+  }
+
+  void showProgressDialog() {
+    progressDialog = new ProgressDialog(context);
+    progressDialog.show();
   }
 }
 

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loginui/screen/home.dart';
 import 'package:loginui/screen/sign_up_screen.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,14 +26,17 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  String giveId = '';
+  String giveId = '123456';
   String getId = '';
+
+  ProgressDialog dialog;
 
   @override
   Widget build(BuildContext context) {
-    DatabaseReference userRef =
+    final DatabaseReference userRef =
         FirebaseDatabase.instance.reference().child('Users');
 
+    showDialog();
     getDeviceImeiId();
     setState(() {
       userRef.child(giveId).once().then((DataSnapshot snapshot) {
@@ -47,13 +51,16 @@ class _AuthScreenState extends State<AuthScreen> {
       // ignore: missing_return
       builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
+          dialog.dismiss();
           return SignUpScreen();
         }
         if (giveId == getId) {
+          dialog.dismiss();
           Fluttertoast.showToast(msg: 'match: ' + getId);
           print('match: ' + getId);
           return HomeScreen();
         } else {
+          dialog.dismiss();
           Fluttertoast.showToast(msg: 'not match: ' + getId);
           print('not match: ' + getId);
           return SignUpScreen();
@@ -62,8 +69,15 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
+  // ignore: avoid_void_async
   void getDeviceImeiId() async {
     print('called method');
     giveId = await DeviceId.getID;
+  }
+
+  // ignore: avoid_void_async
+  void showDialog() async {
+    dialog = ProgressDialog(context);
+    await dialog.show();
   }
 }

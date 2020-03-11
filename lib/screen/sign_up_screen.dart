@@ -7,6 +7,7 @@ import 'package:loginui/widgets/CustomAppBar.dart';
 import 'package:loginui/widgets/ResponsiveWidget.dart';
 import 'package:loginui/widgets/custom_shape_clipper.dart';
 import 'package:loginui/widgets/custom_text_field.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -25,6 +26,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   String deviceImeiId = '';
 
+  ProgressDialog progressDialog;
+
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
@@ -34,6 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
 
     getImeiId();
+    //shoProgressDialog();
 
     return Material(
       child: Scaffold(
@@ -225,6 +229,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
+        shoProgressDialog();
         print("Routing to your account");
         print(deviceImeiId);
         storeUserInfo();
@@ -258,12 +263,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
     Fluttertoast.showToast(msg: nameController.text);
     DatabaseReference userRef =
         FirebaseDatabase.instance.reference().child('Users');
+
+    DatabaseReference blogRef =
+        FirebaseDatabase.instance.reference().child('Blog');
+
     userRef.child(deviceImeiId).set({
       'uid': deviceImeiId,
       'name': nameController.text,
       'phone': phoneController.text,
       'diamond': '0.0'
     });
+    blogRef.child(deviceImeiId).set({
+      'self_confident': 'null',
+      'student_hack': 'null',
+      'start_busniess': 'null',
+      'set_goal': 'null',
+      'fitness': 'null',
+      'job_interview': 'null',
+      'failure': 'null',
+      'hiv_aids': 'null',
+    });
+    progressDialog.dismiss();
     goToHomeScreen();
   }
 
@@ -273,6 +293,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         MaterialPageRoute<void>(
           builder: (context) => HomeScreen(),
         ));
+  }
+
+  void shoProgressDialog() {
+    progressDialog = ProgressDialog(context);
+    progressDialog.show();
   }
 
   /*Widget infoTextRow() {

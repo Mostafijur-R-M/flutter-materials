@@ -29,6 +29,9 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
   String deviceImeiId = '';
   DatabaseReference userRef =
       FirebaseDatabase.instance.reference().child('Users');
+  DatabaseReference blogRef =
+      FirebaseDatabase.instance.reference().child('Blog');
+
   String diamond = '0.0', name = '', phone = '', uid = '';
   double currentDiamond = 0.0, getDiamond = 500.0;
   DatabaseReference withdrawRef =
@@ -36,7 +39,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
 
   //timer count
   Timer timer;
-  int _start = 20;
+  int _start = 6000;
   void startTimeer() {}
 
   //admob integrate
@@ -121,8 +124,9 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
     //startTimeer();
     //Fluttertoast.showToast(msg: _start.toString());
     //print(_start);
-    showTimer();
+    //showTimer();
     //showAd();
+    showDateTime();
     getImeiId();
     getUserData();
     return Material(
@@ -268,10 +272,10 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                 timer.cancel();
               } else {
                 _start = _start - 1;
+                //setBlogTimer();
                 if (_start == 1) {
                   timer.cancel();
-                  Fluttertoast.showToast(msg: _start.toString());
-                  Fluttertoast.showToast(msg: 'Congrats! you won 500 diamond.');
+
                   showAd();
                 }
               }
@@ -280,12 +284,46 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
 
   void addDiamondDb() {
     currentDiamond = double.parse(diamond);
+    Fluttertoast.showToast(msg: 'Congrats! you won 500 diamond.');
     final double finalDiamond = currentDiamond + getDiamond;
     userRef.child(deviceImeiId).set({
       'name': name,
       'phone': phone,
       'uid': uid,
       'diamond': finalDiamond.toString(),
+    });
+  }
+
+  void setBlogTimer() {
+    Fluttertoast.showToast(msg: _start.toString());
+  }
+
+  void showDateTime() {
+    DateTime date = new DateTime.now();
+
+    String adShowDate = date.day.toString() +
+        '-' +
+        date.month.toString() +
+        '-' +
+        date.year.toString();
+
+    blogRef.child(deviceImeiId).once().then((DataSnapshot snapshot) {
+      String previousDate = '${snapshot.value['adShowDate']}';
+
+      Fluttertoast.showToast(msg: previousDate);
+
+      if (previousDate == adShowDate) {
+        Fluttertoast.showToast(
+            msg: 'You have got already dimond today. Wait for next day');
+      }
+      if (previousDate == null || previousDate != adShowDate) {
+        blogRef
+            .child(deviceImeiId)
+            .child('Self Confident')
+            .set({'adShowDate': adShowDate});
+        showAd();
+        addDiamondDb();
+      }
     });
   }
 }
